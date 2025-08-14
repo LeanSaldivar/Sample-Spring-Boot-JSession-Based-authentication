@@ -1,0 +1,40 @@
+package com.lean.csrf.controller;
+
+import com.lean.csrf.infras.UserMapper;
+import com.lean.csrf.infras.UserService;
+import com.lean.csrf.service.UserServiceImpl;
+import com.lean.csrf.view.dto.AuthResponseDto;
+import com.lean.csrf.view.dto.LoginResultDto;
+import com.lean.csrf.view.dto.UserRequestDto;
+import com.lean.csrf.view.dto.UserResponseDto;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/api/v2/users/auth")
+@RequiredArgsConstructor
+public class UserController {
+    private final UserService userService;
+    private final UserMapper userMapper;
+
+    @PostMapping("/action/login")
+    public ResponseEntity<AuthResponseDto> loginUser(@RequestBody UserRequestDto userRequest) {
+        LoginResultDto loginResult = userService.loginUser(userRequest);
+
+         AuthResponseDto responseBody = new AuthResponseDto(
+                userMapper.toResponseDTO(loginResult.user())
+        );
+
+        return ResponseEntity.ok().body(responseBody);
+    }
+
+    @PostMapping("/action/register")
+    public ResponseEntity<UserResponseDto> createUser(@RequestBody UserRequestDto userRequest) {
+        UserResponseDto userResponseDto = userService.createUser(userRequest);
+        return ResponseEntity.ok().body(userResponseDto);
+    }
+}

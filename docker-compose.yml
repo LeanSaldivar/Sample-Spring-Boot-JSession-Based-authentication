@@ -1,0 +1,23 @@
+services:
+  postgres:
+    container_name: postgres-spring-boot
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: leanSaldivar
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: session
+      PGDATA: /session/postgres
+    volumes:
+      - db:/session/postgres
+    ports:
+      - "5452:5432"
+    networks:
+      - session
+    restart: unless-stopped
+
+networks:
+  session:
+    driver: bridge
+
+volumes:
+  db:
