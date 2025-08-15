@@ -37,6 +37,7 @@ replay_pid*
 *.iml
 *.ipr
 out/
+target
 
 ### Eclipse ###
 .apt_generated
@@ -77,8 +78,11 @@ Thumbs.db
 *~
 
 ### Docker ###
-docker-compose.override.yml
-/docker/data/
+docker-compose.yml
+
+### Application Properties
+src/main/resources/application.properties
+
 
 ### Spring Boot ###
 HELP.md
