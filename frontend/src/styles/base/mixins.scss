@@ -2,13 +2,21 @@
 @mixin flex-column {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+
 
 }
 
 @mixin flex-row {
   display: flex;
-  align-items: center;
-  justify-content: center;
+}
+
+@mixin grid-row {
+  display: grid;
+  justify-items: center;
+  grid-template-rows: repeat(4, minmax(100px, 1fr));
+  gap: 1rem;
+}
+
+@mixin grid-column {
+  display: grid;
 }
