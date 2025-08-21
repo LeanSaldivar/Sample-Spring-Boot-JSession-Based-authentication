@@ -156,7 +156,8 @@
 
   .login-card-button {
     padding: 0.5rem 2rem;
-    background: linear-gradient(0deg, rgba(98, 142, 255, 1) 0%, rgba(135, 64, 205, 1) 50%, rgba(88, 4, 117, 1) 100%);
+    background: #628EFF;
+    background: linear-gradient(90deg, rgba(98, 142, 255, 1) 0%, rgba(135, 64, 205, 1) 53%, rgba(88, 4, 117, 1) 100%);
     color: $text-color;
     border-radius: 5px;
     border: none;
@@ -191,37 +192,7 @@
   }
 }
 
-.line {
-  overflow: hidden;
-  text-align: center;
-  color: $gray;
-  font-size: 1rem;
-  font-weight: 500;
-  margin-top: 1rem;
-
-  &::before,
-  &::after {
-    background-color: $gray;
-    content: "--------------------------";
-    display: inline-block;
-    height: 1px;
-    position: relative;
-    vertical-align: middle;
-    width: 50%;
-  }
-
-  &::before {
-    right: 0.5em;
-    margin-left: -50%;
-  }
-
-  &::after {
-    left: 0.5em;
-    margin-right: -50%;
-  }
-}
-
-.logo-wrapper {
+.login-logo-wrapper {
   @include flex-row;
   justify-content: center;
   margin-top: 0.5rem;

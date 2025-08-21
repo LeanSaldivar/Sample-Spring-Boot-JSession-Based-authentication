@@ -1,54 +1,41 @@
-import './styles/main.scss'
-import './styles/login.scss'
-import './styles/loginHeader.scss'
-import ellipse1 from './assets/Ellipse1.png'
-import ellipse2 from './assets/Ellipse 2.png'
-import LoginHeader from './components/LoginHeader.tsx'
+import '../styles/main.scss'
+import '../styles/register.scss'
+import '../styles/Header.scss'
+import RegisterHeader from "../components/RegisterHeader.tsx";
+import ellipse1 from "../assets/Ellipse1(blue).png";
+import ellipse2 from "../assets/Ellipse2(blue).png";
+import {Link} from "react-router-dom";
 
-function Login() {
+function Register() {
     return (
         <>
-            <div className={"container"}>
-                <LoginHeader/>
+             <div className={"container"}>
+                <RegisterHeader/>
 
-                <div className="login-container">
-                    <img className="login-card-image" src={ellipse1}
-                         alt="login-card-image"
+                <div className="register-container">
+                    <img className="register-card-image" src={ellipse1}
+                         alt="register-card-image"
                          draggable={false}
-                         onContextMenu={(e) => e.preventDefault()} // This disables right-click
+                         onContextMenu={(e) => e.preventDefault()}
                     />
 
-                    <div className="login-card">
-                        <p className="login-card-title">
-                            Login
+                    <div className="register-card">
+                        <p className="register-card-title">
+                            Sign up
                         </p>
 
-                        <p className="login-card-subtitle">
-                            Glad you're back..!
+                        <p className="register-card-subtitle">
+                            Just some details to get you in.!
                         </p>
 
-                        <form className="login-card-form">
+                        <form className="register-card-form">
                             <input id={"userName"} className={"userName"} type="text" placeholder="Username"/>
+                            <input id={"Email"} className={"Email"} type="password" placeholder="Email"/>
                             <input id={"password"} className={"password"} type="password" placeholder="Password"/>
-                            <svg id={"hide"} width="18" height="19" viewBox="0 0 18 19" fill="none"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M16.0313 12.8047C15.967 12.8413 15.8962 12.8649 15.8228 12.8742C15.7494 12.8834 15.6749 12.878 15.6036 12.8585C15.5323 12.8389 15.4656 12.8054 15.4072 12.76C15.3488 12.7146 15.3 12.6581 15.2635 12.5937L13.9275 10.2594C13.1508 10.7845 12.2941 11.1801 11.3907 11.4308L11.8034 13.9072C11.8156 13.9801 11.8133 14.0547 11.7966 14.1267C11.7799 14.1987 11.7492 14.2667 11.7063 14.3269C11.6633 14.387 11.6089 14.4381 11.5462 14.4772C11.4835 14.5163 11.4136 14.5427 11.3407 14.5548C11.3107 14.5597 11.2804 14.5623 11.25 14.5625C11.117 14.5623 10.9883 14.5149 10.8868 14.4288C10.7854 14.3427 10.7178 14.2234 10.696 14.0921L10.2903 11.6607C9.43469 11.7798 8.56676 11.7798 7.7112 11.6607L7.30549 14.0921C7.28366 14.2236 7.21583 14.3431 7.1141 14.4293C7.01236 14.5154 6.88334 14.5626 6.75003 14.5625C6.71893 14.5624 6.6879 14.5598 6.65721 14.5548C6.5843 14.5427 6.51449 14.5163 6.45176 14.4772C6.38904 14.4381 6.33464 14.387 6.29168 14.3269C6.24871 14.2667 6.21802 14.1987 6.20135 14.1267C6.18469 14.0547 6.18238 13.9801 6.19456 13.9072L6.6094 11.4308C5.70633 11.1793 4.85004 10.783 4.07393 10.2573L2.74221 12.5937C2.70528 12.6581 2.65603 12.7146 2.59728 12.7599C2.53853 12.8052 2.47142 12.8385 2.3998 12.8579C2.32817 12.8773 2.25343 12.8824 2.17984 12.8729C2.10625 12.8634 2.03524 12.8395 1.97088 12.8026C1.90653 12.7656 1.85007 12.7164 1.80475 12.6576C1.75942 12.5989 1.72611 12.5318 1.70672 12.4602C1.68733 12.3885 1.68224 12.3138 1.69173 12.2402C1.70123 12.1666 1.72512 12.0956 1.76206 12.0312L3.16831 9.57031C2.67436 9.14357 2.22015 8.67289 1.81128 8.16406C1.76028 8.10713 1.72143 8.0404 1.69708 7.96795C1.67274 7.8955 1.66341 7.81885 1.66968 7.74268C1.67594 7.66651 1.69766 7.59241 1.73352 7.52491C1.76937 7.45741 1.8186 7.39793 1.87821 7.35009C1.93782 7.30225 2.00655 7.26706 2.0802 7.24667C2.15386 7.22628 2.23091 7.22111 2.30663 7.23148C2.38235 7.24186 2.45517 7.26755 2.52063 7.307C2.58609 7.34645 2.64282 7.39883 2.68737 7.46093C3.85456 8.90515 5.89643 10.625 9.00003 10.625C12.1036 10.625 14.1455 8.90304 15.3127 7.46093C15.3567 7.39756 15.4133 7.34392 15.479 7.30336C15.5446 7.2628 15.6179 7.23618 15.6943 7.22517C15.7707 7.21415 15.8485 7.21897 15.923 7.23933C15.9974 7.25968 16.0669 7.29514 16.127 7.34349C16.1872 7.39185 16.2367 7.45206 16.2726 7.52039C16.3085 7.58871 16.3299 7.66369 16.3356 7.74066C16.3413 7.81763 16.331 7.89494 16.3055 7.96778C16.28 8.04062 16.2398 8.10743 16.1874 8.16406C15.7785 8.67289 15.3243 9.14357 14.8303 9.57031L16.2366 12.0312C16.2743 12.0954 16.299 12.1664 16.3091 12.2401C16.3192 12.3139 16.3146 12.3889 16.2955 12.4608C16.2764 12.5328 16.2432 12.6002 16.1978 12.6592C16.1525 12.7183 16.0959 12.7677 16.0313 12.8047Z"
-                                    fill="white"/>
-                            </svg>
-                            <div className="checkbox-wrapper">
-                                <input type="checkbox" id="remember"/>
-                                <label htmlFor="remember">Remember me</label>
-                            </div>
+                            <input id={"password"} className={"password"} type="password" placeholder="Confirm Password"/>
 
-                            <div className="login-card-button-wrapper">
-                                <button className="login-card-button">Login</button>
-                            </div>
-
-                            <div className="forgot-password-wrapper">
-                                <a className={"forgot-password"} href="/register">
-                                    Forgot password ?
-                                </a>
+                            <div className="register-card-button-wrapper">
+                                <button className="register-card-button">Register</button>
                             </div>
                         </form>
 
@@ -57,7 +44,7 @@ function Login() {
                         <div className="logo-wrapper">
                             <ul className="logo-list">
                                 <li className="logo-item">
-                                    <a href="/register">
+                                    <a href="#">
                                         <svg width="42" height="42" viewBox="0 0 42 42" fill="none"
                                              xmlns="http://www.w3.org/2000/svg">
                                             <path
@@ -67,7 +54,7 @@ function Login() {
                                     </a>
                                 </li>
                                 <li className="logo-item">
-                                    <a href="/register">
+                                    <a href="#">
                                         <svg width="42" height="42" viewBox="0 0 42 42" fill="none"
                                              xmlns="http://www.w3.org/2000/svg">
                                             <g clip-path="url(#clip0_1_97)">
@@ -96,7 +83,7 @@ function Login() {
                                     </a>
                                 </li>
                                 <li className="logo-item">
-                                    <a href="/register">
+                                    <a href="#">
                                         <svg width="42" height="42" viewBox="0 0 42 42" fill="none"
                                              xmlns="http://www.w3.org/2000/svg">
                                             <g clip-path="url(#clip0_1_103)">
@@ -118,31 +105,33 @@ function Login() {
                             </ul>
                         </div>
 
-                        <a className={"register-url"} href={"/register"}>Don't have an Account? Sign up</a>
+                        <p className={"register-url"}>
+                            Already have an Account?
+                            <Link to="/login"> Log in</Link>
+                        </p>
                         <div className={"about"}>
                             <ul className={"about-list"}>
                                 <li className="about-item">
-                                    <a className={"about-link"} href="/about">Terms & Condition</a>
+                                    <a className={"about-link"} href="#">Terms & Condition</a>
                                 </li>
                                 <li className="about-item">
-                                    <a className={"about-link"} href="/about">Support</a>
+                                    <a className={"about-link"} href="#">Support</a>
                                 </li>
                                 <li className="about-item">
-                                    <a className={"about-link"} href="/about">Customer Care</a>
+                                    <a className={"about-link"} href="#">Customer Care</a>
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </div>
-                <img className="login-card-image-2" src={ellipse2}
-                     alt="login-card-image"
+                <img className="register-card-image-2" src={ellipse2}
+                     alt="register-card-image"
                       draggable={false}
                      onContextMenu={(e) => e.preventDefault()} // This disables right-click
                 />
             </div>
-
         </>
     )
 }
 
-export default Login
+export default Register

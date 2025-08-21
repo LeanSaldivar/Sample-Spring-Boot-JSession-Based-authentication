@@ -1,0 +1,145 @@
+@use './base/variables' as *;
+@use './base/mixins' as *;
+@use './base/queries' as *;
+
+
+.register-container {
+  width: 100%;
+  @include flex-row;
+  justify-content: flex-end;
+  padding-right: 4rem;
+  position: relative;
+}
+
+
+.register-card-image {
+  position: absolute;
+  z-index: -1;
+  top: -2rem;
+  right: 20rem;
+  width: 302px;
+  height: 302px;
+  object-fit: contain;
+  max-width: 100%;
+
+  @media (max-width: $breakpoint-md) {
+    display: none;
+  }
+}
+
+.register-card-image-2 {
+  position: absolute;
+  z-index: -1;
+  top: 36rem;
+  right: 4rem;
+  width: 220px;
+  height: 220px;
+  object-fit: contain;
+  max-width: 100%;
+
+  @media (max-width: $breakpoint-md) {
+    display: none;
+  }
+}
+
+
+.register-card {
+  @include flex-column;
+  padding: 2rem;
+
+  width: 100%;
+  max-width: 480px;
+  height: auto;
+
+  border-radius: 10px;
+  border: 1px solid $border-stroke;
+  box-shadow: -10px 0 10px rgba(0, 15, 97, 0.5);
+  backdrop-filter: blur(4rem);
+}
+
+.register-card-title {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.register-card-subtitle {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.register-card-form {
+  @include flex-column;
+  align-items: flex-start;
+  margin-top: 0.5rem;
+  gap: 1rem;
+
+
+  input {
+    width: 100%;
+    background-color: inherit;
+    color: inherit;
+
+    padding: 0.5rem;
+
+    border: 1px solid $text-color;
+    border-radius: 5px;
+
+    font-size: 1.25rem;
+    font-weight: 400;
+  }
+
+  ::placeholder {
+    color: inherit;
+  }
+}
+
+#hide {
+  position: absolute;
+  right: 2.6rem;
+  top: 11.3rem;
+}
+
+
+.register-card-button-wrapper {
+  @include flex-row;
+  justify-content: center;
+  border: inherit;
+  width: 100%;
+
+  .register-card-button {
+    padding: 0.5rem 2rem;
+    background: $btn-register-aqua;
+    background: linear-gradient(90deg, rgba(46, 76, 238, 1) 0%, rgba(34, 30, 191, 1) 53%, rgba(4, 15, 117, 1) 100%);
+    color: $text-color;
+    border-radius: 5px;
+    border: none;
+    font-weight: 600;
+    font-size: 1.25rem;
+    width: 100%;
+    cursor: pointer;
+  }
+
+  .register-card-button:hover {
+    opacity: 0.8;
+  }
+}
+
+.logo-wrapper {
+  @include flex-row;
+  justify-content: center;
+  margin-top: 0.5rem;
+  margin-bottom: 2rem;
+
+  .logo-list {
+    @include flex-row;
+    gap: 1rem;
+  }
+}
+
+.register-url {
+  color: $text-color;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+  text-decoration: none;
+}
