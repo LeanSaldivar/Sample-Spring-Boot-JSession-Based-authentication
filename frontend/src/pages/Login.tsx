@@ -1,37 +1,36 @@
-import './styles/main.scss'
-import './styles/login.scss'
-import './styles/loginHeader.scss'
-import LoginHeader from "./components/LoginHeader.tsx";
-import ellipse1 from "./assets/Ellipse1.png";
-import ellipse2 from "./assets/Ellipse 2.png";
+import '../styles/main.scss'
+import '../styles/login.scss'
+import '../styles/Header.scss'
+import ellipse1 from '../assets/Ellipse1.png'
+import ellipse2 from '../assets/Ellipse 2.png'
+import LoginHeader from '../components/LoginHeader.tsx'
+import { Link } from 'react-router-dom'; // 1. Import the Link component
 
-function Register() {
+function Login() {
     return (
         <>
-             <div className={"container"}>
+            <div className={"container"}>
                 <LoginHeader/>
 
                 <div className="login-container">
                     <img className="login-card-image" src={ellipse1}
                          alt="login-card-image"
                          draggable={false}
-                         onContextMenu={(e) => e.preventDefault()}
+                         onContextMenu={(e) => e.preventDefault()} // This disables right-click
                     />
 
                     <div className="login-card">
                         <p className="login-card-title">
-                            Signup
+                            Login
                         </p>
 
                         <p className="login-card-subtitle">
-                            Just some details to get you in.!
+                            Glad you're back..!
                         </p>
 
                         <form className="login-card-form">
                             <input id={"userName"} className={"userName"} type="text" placeholder="Username"/>
-                            <input id={"Email"} className={"Email"} type="password" placeholder="Email"/>
                             <input id={"password"} className={"password"} type="password" placeholder="Password"/>
-                            <input id={"password"} className={"password"} type="password" placeholder="Confirm Password"/>
                             <svg id={"hide"} width="18" height="19" viewBox="0 0 18 19" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -56,7 +55,7 @@ function Register() {
 
                         <p className={"line"}> Or </p>
 
-                        <div className="logo-wrapper">
+                        <div className="login-logo-wrapper">
                             <ul className="logo-list">
                                 <li className="logo-item">
                                     <a href="/register">
@@ -120,7 +119,10 @@ function Register() {
                             </ul>
                         </div>
 
-                        <a className={"register-url"} href={"/register"}>Don't have an Account? Sign up</a>
+                        <p className={"register-url"}>
+                            Don't have an Account?
+                            <Link to="/register"> Sign up</Link>
+                        </p>
                         <div className={"about"}>
                             <ul className={"about-list"}>
                                 <li className="about-item">
@@ -142,8 +144,9 @@ function Register() {
                      onContextMenu={(e) => e.preventDefault()} // This disables right-click
                 />
             </div>
+
         </>
     )
 }
 
-export default Register
+export default Login
