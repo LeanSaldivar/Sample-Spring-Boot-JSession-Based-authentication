@@ -1,0 +1,57 @@
+@use './base/variables' as *;
+@use './base/mixins' as *;
+@use './base/queries' as *;
+
+.header-container {
+  @include flex-column;
+  justify-content: center;
+  padding-left: 2.5rem;
+
+   @media (max-width: $breakpoint-md) {
+    padding-left: 0; // Remove side padding
+    align-items: center; // Center everything when stacked
+    text-align: center;
+  }
+}
+
+.header-text {
+  font-size: 5rem;
+  font-weight: 600;
+
+  @media (max-width: $breakpoint-lg) {
+    font-size: 4rem; // Slightly smaller on smaller desktops
+  }
+  @media (max-width: $breakpoint-sm) {
+    font-size: 3rem; // Much smaller on mobile
+  }
+}
+
+.subtext-container {
+  @include flex-row;
+  gap: 1rem;
+  width: 100%;
+
+}
+
+.subtext {
+  border: 1px solid #fff;
+  width: 100%;
+  max-width: 240px;
+  font-size: 2rem;
+  font-weight: 600;
+  font-style: italic;
+  padding: 1rem 1rem;
+
+  @media (max-width: $breakpoint-sm) {
+    font-size: 1.5rem; // Scale down subtext
+    max-width: 200px;
+  }
+}
+
+.dashed-line {
+  align-self: center;
+  stroke: $gray;
+  stroke-width: 0.5;
+  stroke-dasharray: 2 2;
+
+}
