@@ -6,7 +6,7 @@ import ellipse1 from "../assets/Ellipse1(blue).png";
 import ellipse2 from "../assets/Ellipse2(blue).png";
 import {Link} from "react-router-dom";
 
-function Register() {
+export const Register = () => {
     return (
         <>
              <div className={"container"}>
@@ -134,4 +134,3 @@ function Register() {
     )
 }
 
-export default Register
