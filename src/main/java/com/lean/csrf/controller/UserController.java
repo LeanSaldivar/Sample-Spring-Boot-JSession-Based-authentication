@@ -12,13 +12,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v2/users/auth")
+@RequestMapping("/api/v2/users")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
     private final UserMapper userMapper;
 
-    @PostMapping("/action/login")
+    @PostMapping("/auth/action/login")
     public ResponseEntity<AuthResponseDto> loginUser(@RequestBody UserRequestDto userRequest) {
         LoginResultDto loginResult = userService.loginUser(userRequest);
 
@@ -29,9 +29,15 @@ public class UserController {
         return ResponseEntity.ok().body(responseBody);
     }
 
-    @PostMapping("/action/register")
+    @PostMapping("/auth/action/register")
     public ResponseEntity<UserResponseDto> createUser(@RequestBody UserRequestDto userRequest) {
         UserResponseDto userResponseDto = userService.createUser(userRequest);
+        return ResponseEntity.ok().body(userResponseDto);
+    }
+
+    @GetMapping("/query/{id}")
+    public ResponseEntity<UserResponseDto> getUserById(@RequestParam Long id) {
+        UserResponseDto userResponseDto = userService.getUserById(id);
         return ResponseEntity.ok().body(userResponseDto);
     }
 }

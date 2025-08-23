@@ -1,6 +1,7 @@
 package com.lean.csrf.exception.handler;
 
 import com.lean.csrf.exception.custom.DuplicateResourceException;
+import com.lean.csrf.exception.custom.PasswordsDoesNotMatchException;
 import com.lean.csrf.exception.custom.ResourceNotFoundException;
 import com.lean.csrf.util.ErrorApiResponse;
 import com.lean.csrf.util.LoggerErrorMessage;
@@ -40,7 +41,8 @@ public class ApiHandler {
         LoggerErrorMessage.logWarn(
                 logger,
                 ex.getMessage(),
-                request);
+                request
+        );
 
         ErrorApiResponse errorDetail = ProblemDetailErrorMessage.create(
                 HttpStatus.NOT_FOUND,
@@ -52,5 +54,22 @@ public class ApiHandler {
         return new ResponseEntity<>(errorDetail, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(PasswordsDoesNotMatchException.class)
+    public ResponseEntity<ProblemDetail> handlePasswordsDoesNotMatchException(PasswordsDoesNotMatchException ex, HttpServletRequest request) {
+        LoggerErrorMessage.logWarn(
+                logger,
+                ex.getMessage(),
+                request
+        );
 
+        ErrorApiResponse errorDetail = ProblemDetailErrorMessage.create(
+                HttpStatus.BAD_REQUEST,
+                "Passwords do not match. Please check the request body for invalid values or missing values.",
+                ex.getMessage(),
+                400,
+                request
+        );
+
+        return new ResponseEntity<>(errorDetail, HttpStatus.BAD_REQUEST);
+    }
 }

@@ -1,6 +1,6 @@
-@use './base/variables' as *;
-@use './base/mixins' as *;
-@use './base/queries' as *;
+@use '../../styles/base/variables' as *;
+@use '../../styles/base/mixins' as *;
+@use '../../styles/base/Queries' as *;
 
 .header-container {
   @include flex-column;

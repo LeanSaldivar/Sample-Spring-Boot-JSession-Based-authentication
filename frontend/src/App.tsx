@@ -1,9 +1,9 @@
 import {Routes, Route} from 'react-router-dom'; // 1. Import Routes and Route
 
-import Login from './pages/Login';
-import Register from './pages/Register';
+import {Login} from './pages/Login';
+import {Register} from './pages/Register';
 
-function App() {
+export const App = ()=> {
     return (
         <div>
             <Routes>
@@ -19,4 +19,3 @@ function App() {
     );
 }
 
-export default App

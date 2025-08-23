@@ -1,12 +1,12 @@
-import '../styles/main.scss'
-import '../styles/login.scss'
-import '../styles/Header.scss'
+import '../styles/global.scss'
+import './login.scss'
+import '../components/header/Header.scss'
 import ellipse1 from '../assets/Ellipse1.png'
 import ellipse2 from '../assets/Ellipse 2.png'
-import LoginHeader from '../components/LoginHeader.tsx'
+import LoginHeader from '../components/header/LoginHeader.tsx'
 import { Link } from 'react-router-dom'; // 1. Import the Link component
 
-function Login() {
+export const Login = () => {
     return (
         <>
             <div className={"container"}>
@@ -149,4 +149,3 @@ function Login() {
     )
 }
 
-export default Login
