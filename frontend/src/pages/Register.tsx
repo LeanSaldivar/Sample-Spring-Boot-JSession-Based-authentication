@@ -1,7 +1,7 @@
-import '../styles/main.scss'
-import '../styles/register.scss'
-import '../styles/Header.scss'
-import RegisterHeader from "../components/RegisterHeader.tsx";
+import '../styles/global.scss'
+import './register.scss'
+import '../components/header/Header.scss'
+import RegisterHeader from "../components/header/RegisterHeader.tsx";
 import ellipse1 from "../assets/Ellipse1(blue).png";
 import ellipse2 from "../assets/Ellipse2(blue).png";
 import {Link} from "react-router-dom";
