@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -45,13 +46,13 @@ public class ApiHandler {
         );
 
         ErrorApiResponse errorDetail = ProblemDetailErrorMessage.create(
-                HttpStatus.NOT_FOUND,
+                HttpStatus.CONFLICT,
                 "Duplicate Resource or Unique Constraint Violation. Please check the request body for duplicate values.",
                 ex.getMessage(),
                 409, // Example custom error code for this specific case
                 request
         );
-        return new ResponseEntity<>(errorDetail, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(errorDetail, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(PasswordsDoesNotMatchException.class)
@@ -71,5 +72,22 @@ public class ApiHandler {
         );
 
         return new ResponseEntity<>(errorDetail, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<ProblemDetail> handleAuthenticationException(AuthenticationException ex, HttpServletRequest request) {
+        LoggerErrorMessage.logWarn(
+                logger,
+                "Authentication failed: " + ex.getMessage(),
+                request);
+
+        ErrorApiResponse errorDetail = ProblemDetailErrorMessage.create(
+                HttpStatus.UNAUTHORIZED,
+                "Authentication Failed",
+                ex.getMessage(),
+                401,
+                request
+        );
+        return new ResponseEntity<>(errorDetail, HttpStatus.UNAUTHORIZED);
     }
 }

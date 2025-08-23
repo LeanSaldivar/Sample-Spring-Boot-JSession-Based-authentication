@@ -4,9 +4,42 @@ import '../components/header/Header.scss'
 import ellipse1 from '../assets/Ellipse1.png'
 import ellipse2 from '../assets/Ellipse 2.png'
 import LoginHeader from '../components/header/LoginHeader.tsx'
-import { Link } from 'react-router-dom'; // 1. Import the Link component
+import {Link} from 'react-router-dom'; // 1. Import the Link component
+import {useState} from 'react';
+import {login} from "../api/authService.tsx";
+import type {UserLogin} from "../types/UserLogin.tsx";
+import * as React from "react";
 
 export const Login = () => {
+
+    const [formData, setFormData] = useState<UserLogin>({});
+    const [error, setError] = useState("");
+
+      const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+          setFormData({
+              ...formData,
+              [e.target.name]: e.target.value
+          });
+      };
+
+    const handleLogin = async (e: React.FormEvent) => {
+        try {
+            e.preventDefault();
+            if (!formData.email || !formData.password) {
+                setError('Please enter both username and password.');
+            }
+
+            console.log("Authenticating...")
+
+            const response = await login(formData);
+            console.log('Login successful:', response.data);
+
+        } catch (error) {
+            console.error('Error logging in:', error);
+            setError('Invalid username or password.');
+        }
+    };
+
     return (
         <>
             <div className={"container"}>
@@ -29,8 +62,22 @@ export const Login = () => {
                         </p>
 
                         <form className="login-card-form">
-                            <input id={"userName"} className={"userName"} type="text" placeholder="Username"/>
-                            <input id={"password"} className={"password"} type="password" placeholder="Password"/>
+                            <input
+                                id={"email"}
+                                className={"email"}
+                                type="text"
+                                name={"email"}
+                                placeholder="Email"
+                                onChange={handleChange}
+                            />
+                            <input
+                                id={"password"}
+                                className={"password"}
+                                type="password"
+                                placeholder="Password"
+                                name={"password"}
+                                onChange={handleChange}
+                            />
                             <svg id={"hide"} width="18" height="19" viewBox="0 0 18 19" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -42,8 +89,10 @@ export const Login = () => {
                                 <label htmlFor="remember">Remember me</label>
                             </div>
 
+                            {error && <p className="text-danger">{error}</p>} {/* Render error message if exists */}
+
                             <div className="login-card-button-wrapper">
-                                <button className="login-card-button">Login</button>
+                                <button className="login-card-button" onClick={handleLogin}>Login</button>
                             </div>
 
                             <div className="forgot-password-wrapper">
@@ -140,7 +189,7 @@ export const Login = () => {
                 </div>
                 <img className="login-card-image-2" src={ellipse2}
                      alt="login-card-image"
-                      draggable={false}
+                     draggable={false}
                      onContextMenu={(e) => e.preventDefault()} // This disables right-click
                 />
             </div>

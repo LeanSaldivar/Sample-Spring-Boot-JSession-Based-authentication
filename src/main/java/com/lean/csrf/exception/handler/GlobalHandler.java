@@ -26,13 +26,13 @@ public class GlobalHandler {
         );
 
         ErrorApiResponse errorDetail = ProblemDetailErrorMessage.create(
-                HttpStatus.NOT_FOUND,
+                HttpStatus.INTERNAL_SERVER_ERROR,
                 "Internal Server Error. Please contact the developer for assistance.",
                 ex.getMessage(),
                 500, // Example custom error code for this specific case
                 request
         );
-        return new ResponseEntity<>(errorDetail, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(errorDetail, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 
