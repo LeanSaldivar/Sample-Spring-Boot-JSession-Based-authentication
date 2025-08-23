@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponseDto createUser(UserRequestDto userRequest) {
-        if (userRepository.existsByEmail(userRequest.email()) && userRepository.existsByUserName(userRequest.userName())) {
+        if (userRepository.existsByEmail(userRequest.email()) || userRepository.existsByUserName(userRequest.userName())) {
             throw new DuplicateResourceException("This email or username is already taken.");
         }
 

@@ -5,11 +5,43 @@ import RegisterHeader from "../components/header/RegisterHeader.tsx";
 import ellipse1 from "../assets/Ellipse1(blue).png";
 import ellipse2 from "../assets/Ellipse2(blue).png";
 import {Link} from "react-router-dom";
+import {useState} from 'react';
+import { register } from "../api/authService.tsx";
+import type {UserRegistration} from "../types/UserRegistration.tsx";
+import * as React from "react";
 
 export const Register = () => {
+
+      const [formData, setFormData] = useState<UserRegistration>({});
+      const [error, setError] = useState("");
+
+      const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+          setFormData({
+              ...formData,
+              [e.target.name]: e.target.value
+          });
+      };
+
+    const handleRegister = async (e: React.FormEvent) => {
+          e.preventDefault();
+          if (formData.password !== formData.confirmPassword) {
+              setError('Passwords do not match.');
+              return;
+          }
+          try {
+              const response = await register(formData);
+              console.log(response.data);
+          } catch (err) {
+              setError('Registration failed. Please try again.');
+              console.error(err);
+          }
+      };
+
+
+
     return (
         <>
-             <div className={"container"}>
+            <div className={"container"}>
                 <RegisterHeader/>
 
                 <div className="register-container">
@@ -29,14 +61,44 @@ export const Register = () => {
                         </p>
 
                         <form className="register-card-form">
-                            <input id={"userName"} className={"userName"} type="text" placeholder="Username"/>
-                            <input id={"Email"} className={"Email"} type="password" placeholder="Email"/>
-                            <input id={"password"} className={"password"} type="password" placeholder="Password"/>
-                            <input id={"password"} className={"password"} type="password" placeholder="Confirm Password"/>
+                            <input
+                                id={"userName"}
+                                className={"userName"}
+                                type="text"
+                                placeholder="Username"
+                                name={"userName"}
+                                onChange={handleChange}
+                            />
+                            <input
+                                id={"Email"}
+                                className={"Email"}
+                                type="password"
+                                placeholder="Email"
+                                name={"email"}
+                                onChange={handleChange}
+                            />
+                            <input
+                                id={"password"}
+                                className={"password"}
+                                type="password"
+                                placeholder="Password"
+                                name={"password"}
+                                onChange={handleChange}
+                            />
+                            <input
+                                id={"confirmPassword"}
+                                className={"confirmPassword"}
+                                type="password"
+                                placeholder="Confirm Password"
+                                name={"confirmPassword"}
+                                onChange={handleChange}
+                            />
+
 
                             <div className="register-card-button-wrapper">
-                                <button className="register-card-button">Register</button>
+                                <button className="register-card-button" onClick={handleRegister}>Register</button>
                             </div>
+                            {error && <p className="text-danger">{error}</p>} {/* Render error message if exists */}
                         </form>
 
                         <p className={"line"}> Or </p>
@@ -126,7 +188,7 @@ export const Register = () => {
                 </div>
                 <img className="register-card-image-2" src={ellipse2}
                      alt="register-card-image"
-                      draggable={false}
+                     draggable={false}
                      onContextMenu={(e) => e.preventDefault()} // This disables right-click
                 />
             </div>
