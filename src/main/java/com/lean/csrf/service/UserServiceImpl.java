@@ -2,6 +2,8 @@ package com.lean.csrf.service;
 
 import com.lean.csrf.config.security.CustomUserDetails;
 import com.lean.csrf.exception.custom.DuplicateResourceException;
+import com.lean.csrf.exception.custom.PasswordsDoesNotMatchException;
+import com.lean.csrf.exception.custom.ResourceNotFoundException;
 import com.lean.csrf.infras.UserMapper;
 import com.lean.csrf.infras.UserRepository;
 import com.lean.csrf.infras.UserService;
@@ -19,6 +21,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -27,6 +31,12 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final BCryptPasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+
+    private User findUserByIdOrThrow(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User with id: " + id + " not found"));
+    }
+
 
     @Override
     public LoginResultDto loginUser(UserRequestDto userRequest) {
@@ -45,15 +55,28 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponseDto createUser(UserRequestDto userRequest) {
-        if (userRepository.existsByEmail(userRequest.email())) {
-            throw new DuplicateResourceException("Email '" + userRequest.email() + "' is already in use.");
+        if (userRepository.existsByEmail(userRequest.email()) && userRepository.existsByUserName(userRequest.userName())) {
+            throw new DuplicateResourceException("This email or username is already taken.");
         }
+
+        if (!userRequest.password().equals(userRequest.confirmPassword())) {
+            throw new PasswordsDoesNotMatchException("Passwords do not match.");
+        }
+
 
         User userEntity = userMapper.toEntity(userRequest);
         userEntity.setPassword(passwordEncoder.encode(userRequest.password()));
 
         User savedUser = userRepository.save(userEntity);
         return userMapper.toResponseDTO(savedUser);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public UserResponseDto getUserById(Long id) {
+        User user = findUserByIdOrThrow(id);
+        return userMapper.toResponseDTO(user);
+
     }
 
     @Override
