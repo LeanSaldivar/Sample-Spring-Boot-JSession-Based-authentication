@@ -2,7 +2,6 @@ package com.lean.csrf.controller;
 
 import com.lean.csrf.infras.UserMapper;
 import com.lean.csrf.infras.UserService;
-import com.lean.csrf.service.UserServiceImpl;
 import com.lean.csrf.view.dto.AuthResponseDto;
 import com.lean.csrf.view.dto.LoginResultDto;
 import com.lean.csrf.view.dto.UserRequestDto;
@@ -36,7 +35,7 @@ public class UserController {
     }
 
     @GetMapping("/query/{id}")
-    public ResponseEntity<UserResponseDto> getUserById(@RequestParam Long id) {
+    public ResponseEntity<UserResponseDto> getUserById(@PathVariable Long id) {
         UserResponseDto userResponseDto = userService.getUserById(id);
         return ResponseEntity.ok().body(userResponseDto);
     }

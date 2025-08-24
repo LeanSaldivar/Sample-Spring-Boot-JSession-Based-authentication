@@ -1,23 +1,25 @@
 import {useNavigate} from 'react-router-dom'; // Import useHistory hook
-import {useState} from 'react';
-import type {UserLogin} from "../types/UserLogin.ts";
+import { useAuth } from "../api/authContext.tsx";
 
 export const Dashboard = () => {
     const navigate = useNavigate();
-    const [formData] = useState<UserLogin>({});
+    const { logout, user } = useAuth();
 
      const handleLogout = async () => {
-        // Perform logout actions here (e.g., clear session, remove authentication token)
-        // After logout, redirect to the login page
-         console.log("Logging out...")
-        navigate('/');
+         try {
+             await logout();
+             console.log('Logout successful:')
+             navigate('/login');
+         } catch (error) {
+             console.error('Error logging out:', error);
+         }
     };
 
     return (
         <>
             <h1>Dashboard</h1>
             <p>Welcome to your dashboard!</p>
-            <p>You are logged in as, {formData.email}</p>
+            <p>You are logged in as, {user?.userName}</p>
 
             <button onClick={handleLogout}>Logout</button>
         </>

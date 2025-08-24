@@ -9,7 +9,7 @@ export const login = (credentials: UserLogin) => {
 export const register = (userData: UserRegistration) => {
     return apiClient.post('/users/auth/action/register', userData);
 };
-// To be used later
-// export const logout = (cookie: UserLogin) => {
-//     return apiClient.delete('/users/auth/action/logout', cookie);
-// }
+
+export const logout = () => {
+    return apiClient.post('/users/auth/action/logout');
+}

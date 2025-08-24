@@ -5,12 +5,14 @@ import com.lean.csrf.config.security.utils.PasswordConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 import org.springframework.web.cors.CorsConfigurationSource;
 
 @Configuration
@@ -29,12 +31,18 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
                 .csrf(csrf -> csrf.disable())
 
-        .authorizeHttpRequests(auth -> auth
+                .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v2/users/auth/action/**")
                         .permitAll()
                         .anyRequest().authenticated()
                 )
-                 .logout(logout -> logout.disable())
+
+                .logout(logout -> logout
+                        .logoutUrl("/api/v2/users/auth/action/logout")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                        .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler(HttpStatus.NO_CONTENT)))
+
                 .httpBasic(basic -> basic.disable())
                 .formLogin(login -> login.disable())
                 .authenticationProvider(apiAuthenticationProvider());
@@ -42,7 +50,7 @@ public class SecurityConfig {
         return http.build();
     }
 
-      @Bean
+    @Bean
     public AuthenticationProvider apiAuthenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService);
