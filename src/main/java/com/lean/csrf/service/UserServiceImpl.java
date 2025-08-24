@@ -21,8 +21,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -76,11 +74,5 @@ public class UserServiceImpl implements UserService {
     public UserResponseDto getUserById(Long id) {
         User user = findUserByIdOrThrow(id);
         return userMapper.toResponseDTO(user);
-
-    }
-
-    @Override
-    public void logoutUser() {
-
     }
 }

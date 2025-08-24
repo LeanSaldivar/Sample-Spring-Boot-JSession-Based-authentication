@@ -9,6 +9,5 @@ import java.util.List;
 public interface UserService {
     LoginResultDto loginUser(UserRequestDto users);
     UserResponseDto createUser(UserRequestDto users);
-    public UserResponseDto getUserById(Long id);
-    void logoutUser();
+    UserResponseDto getUserById(Long id);
 }

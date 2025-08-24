@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, type ReactNode } from 'react';
 import { login as apiLogin } from '../api/authService';
+import { logout as apiLogout } from '../api/authService';
 import type { UserLogin } from '../types/UserLogin.ts';
 import type { User } from '../types/User.ts';
 // You would typically have a type for the user object returned from your API
@@ -9,7 +10,7 @@ interface AuthContextType {
     isAuthenticated: boolean;
     user: User | null;
     login: (credentials: UserLogin) => Promise<User>;
-    logout: () => void;
+    logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -32,9 +33,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
     };
 
-    const logout = () => {
-        setUser(null);
-        // Clear any stored tokens
+    const logout = async () => {
+        try {
+            await apiLogout();
+            setUser(null);
+            console.log('Logout successful:');
+        } catch (error) {
+            console.error('Logout failed:', error);
+            throw error;
+        }
     };
 
     const value = { isAuthenticated: !!user, user, login, logout };
