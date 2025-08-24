@@ -6,8 +6,8 @@ import ellipse1 from "../assets/Ellipse1(blue).png";
 import ellipse2 from "../assets/Ellipse2(blue).png";
 import {Link} from "react-router-dom";
 import {useState} from 'react';
-import { register } from "../api/authService.tsx";
-import type {UserRegistration} from "../types/UserRegistration.tsx";
+import { register } from "../api/authService.ts";
+import type {UserRegistration} from "../types/UserRegistration.ts";
 import * as React from "react";
 
 export const Register = () => {

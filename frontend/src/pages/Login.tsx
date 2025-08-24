@@ -4,16 +4,19 @@ import '../components/header/Header.scss'
 import ellipse1 from '../assets/Ellipse1.png'
 import ellipse2 from '../assets/Ellipse 2.png'
 import LoginHeader from '../components/header/LoginHeader.tsx'
-import {Link} from 'react-router-dom'; // 1. Import the Link component
+import {Link, useNavigate} from 'react-router-dom'; // 1. Import the Link component
 import {useState} from 'react';
-import {login} from "../api/authService.tsx";
-import type {UserLogin} from "../types/UserLogin.tsx";
+import type {UserLogin} from "../types/UserLogin.ts";
 import * as React from "react";
+import { useAuth } from "../api/authContext.tsx";
 
 export const Login = () => {
 
     const [formData, setFormData] = useState<UserLogin>({});
     const [error, setError] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
+    const { login } = useAuth();
 
       const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
           setFormData({
@@ -27,16 +30,22 @@ export const Login = () => {
             e.preventDefault();
             if (!formData.email || !formData.password) {
                 setError('Please enter both username and password.');
+                return;
             }
-
+            setIsLoading(true);
+            setError("");
             console.log("Authenticating...")
 
-            const response = await login(formData);
-            console.log('Login successful:', response.data);
 
+            const response = await login(formData);
+            console.log('Login successful:', response);
+            console.log("Redirecting user: ", response);
+            navigate('/dashboard');
         } catch (error) {
             console.error('Error logging in:', error);
             setError('Invalid username or password.');
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -92,7 +101,12 @@ export const Login = () => {
                             {error && <p className="text-danger">{error}</p>} {/* Render error message if exists */}
 
                             <div className="login-card-button-wrapper">
-                                <button className="login-card-button" onClick={handleLogin}>Login</button>
+                                <button
+                                    className="login-card-button"
+                                    onClick={handleLogin}
+                                    disabled={isLoading}>
+                                    {isLoading ? 'Loading...' : 'Login'}
+                                </button>
                             </div>
 
                             <div className="forgot-password-wrapper">
